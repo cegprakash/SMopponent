@@ -3,17 +3,24 @@
   "version": "0.1.0",
   "manifest_version": 2,
   "description": "Adds the view opponent screen for any team",
+  "background" : { "scripts" : ["background.js"] },
   "content_scripts": [
     {
       "matches" : ["http://*.strikermanager.com/inicio.php*"],
       "include_globs" : ["http://en*.strikermanager.com*"],
-      "js":["jquery.js","getschedule.js"]
+      "js":["jquery-1.8.3.min.js","getschedule.js"]
     },
     {
       "matches" : ["http://*.strikermanager.com/equipo.php?id=*"],
       "all_frames" : true,
       "include_globs" : ["http://en*.strikermanager.com*"],
       "js":["jquery.js","jScrollpane.js","team.js"]
+    },
+    {
+      "matches" : ["http://*.strikermanager.com/proximos_partidos.php?*"],
+      "all_frames" : true,
+      "include_globs" : ["http://en*.strikermanager.com*"],
+      "js":["jquery-1.8.3.min.js","parsecalendar.js"]
     }
   ],
   "web_accessible_resources": [
