@@ -10,6 +10,7 @@
      continue; // cup match with no opponent
     }
     team = team[1];
+    var teamname = game.parentElement.previousElementSibling.firstElementChild.title;
     var home = game.parentElement.parentElement.style.backgroundImage.length ? true : false;
     var score = game.innerHTML.match(/(\d+)\-(\d+)/);
     var date = document.getElementsByTagName('th')[0].firstElementChild.firstElementChild.nextElementSibling.innerHTML.match(/([a-zA-Z]+) (\d+)/);
@@ -22,16 +23,18 @@
     if (home) {
      match.home = response.myteam;
      match.away = team;
+     match.awayteamname = teamname;
      match.homescore = score[1];
      match.awayscore = score[2];
     } else {
      match.away = response.myteam;
      match.home = team;
+     match.hometeamname = teamname;
      match.homescore = score[2];
      match.awayscore = score[1];
     }
     if (!storage["team" + team]) {
-     storage["team" + team] = {};
+     storage["team" + team] = [];
     }
     storage["team" + team][match.date] = match; // ensure we get no duplicates
    }

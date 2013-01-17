@@ -27,6 +27,45 @@
  newel.appendChild(td2);
  insertpoint.insertAdjacentElement("afterEnd", newel);
  var thisteam = location.href.match(/id=(\d+)/)[1];
+  chrome.storage.sync.get(null, function(storage) {
+   if (!storage) storage = {};
+   if (storage["team" + thisteam]) {
+    teamdata.previousmatches = '';
+    matches = storage["team" + thisteam];
+    matches.sort(function(a, b) {
+      var datea = new Date(a.date), dateb = new Date(b.date);
+      if (datea < dateb) return -1;
+      if (datea == dateb) return 0;
+      return 1;
+    });
+    for (var i in matches) {
+      if (!matches.hometeamname) {
+        matches.hometeamname = "Us";
+      } else {
+        matches.awayteamname = "Us";
+      }
+      if (matches.hometeamname.length > 15) {
+        matches.hometeamname = matches.hometeamname.slice(0, 14) + "...";
+      }
+      if (matches.awayteamname.length > 15) {
+        matches.awayteamname = matches.awayteamname.slice(0, 14) + "...";
+      }
+      matches.hometeamname.replace('&','&amp;').replace('<','&gt;').replace('>','&lt;');
+      matches.awayteamname.replace('&','&amp;').replace('<','&gt;').replace('>','&lt;');
+      teamdata.previousmatches += "<tr class=\"tipo2\">\
+              <td>" + new Date(i).toLocaleDateString() + "</td>\
+              <td><a href=\"equipo.php?id=" + matches[i].home + "\">" + matches[i].hometeamname + "</a></td>\
+              <td style=\"text-align: right;\" >" + matches[i].homescore + "</td>\
+              <td><img src=\"/img/new/separacio.png\"></td>\
+              <td style=\"text-align: left;\">" + matches[i].awayscore + "</td>\
+              <td><a href=\"equipo.php?id=" + matches[i].away + "\">" + matches[i].awayteamname + "</a></td>\
+              <td>&nbsp;</td>\
+      </tr>"
+    }
+   } else {
+    teamdata.previousmatches = '<tr><td>No Matches</td></tr>';
+   }
+  });
  var parseResult = function(resultsnode) {
   var gamelink = resultsnode.parentElement.previousElementSibling.previousElementSibling.attributes[0].nodeValue;
   $.ajax({
@@ -56,8 +95,6 @@
       total += Number(averages[i].match(/<td class="rojo">(\d+)/)[1]);
     }
     teamdata.average = String(Math.round(total/averages.length));
-    // for now this will be empty
-    teamdata.previousmatches = '<tr><td>Data unavailable</td></tr>';
    }
   });
  };
