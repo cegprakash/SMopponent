@@ -1,6 +1,6 @@
 {
   "name": "Striker Manager View Any Opponent",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "manifest_version": 2,
   "description": "Adds the view opponent screen for any team",
   "background" : { "scripts" : ["background.js"] },
@@ -15,6 +15,12 @@
       "all_frames" : true,
       "include_globs" : ["http://en*.strikermanager.com*"],
       "js":["jquery.js","jScrollpane.js","team.js"]
+    },
+    {
+      "matches" : ["http://*.strikermanager.com/verrival.php?propio=1&otherteam*"],
+      "all_frames" : true,
+      "include_globs" : ["http://en*.strikermanager.com*"],
+      "js":["captureclick.js"]
     },
     {
       "matches" : ["http://*.strikermanager.com/proximos_partidos.php?*"],

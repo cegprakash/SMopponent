@@ -16,7 +16,13 @@
     var date = document.getElementsByTagName('th')[0].firstElementChild.firstElementChild.nextElementSibling.innerHTML.match(/([a-zA-Z]+) (\d+)/);
     var year = date[2];
     var month = date[1];
-    var day = game.parentElement.previousElementSibling.previousElementSibling.previousElementSibling.innerHTML;
+    var day;
+    if (game.parentElement.previousElementSibling.previousElementSibling.previousElementSibling) {
+     day = game.parentElement.previousElementSibling.previousElementSibling.previousElementSibling.innerHTML;
+    } else {
+     // no simul available
+     day = game.parentElement.previousElementSibling.previousElementSibling.innerHTML;
+    }
     var d = new Date(month + " " + day + ", " + year + " 12:00:00");
     var match = {};
     match.date = d.getTime();
@@ -35,8 +41,30 @@
     }
     if (!storage["team" + team]) {
      storage["team" + team] = [];
+     storage["team" + team].push(match);
+    } else {
+     var saved = false;
+     // crude insertion sort
+     for (var j = 0; j < storage["team" + team].length; j++) {
+      if (storage["team" + team][j].date == match.date) {
+       saved = true;
+       break; // this is us, no need to duplicate
+      }
+      if (storage["team" + team][j].date < match.date) {
+       if (j == 0) {
+        storage["team" + team].unshift(match);
+        saved = true;
+        break;
+       }
+       storage["team" + team].splice(j, 0, match);
+       saved = true;
+       break;
+      }
+     }
+     if (!saved) {
+      storage["team" + team].push(match);
+     }
     }
-    storage["team" + team][match.date] = match; // ensure we get no duplicates
    }
    chrome.storage.sync.set(storage, function(result) {});
   });
