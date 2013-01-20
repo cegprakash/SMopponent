@@ -62,8 +62,8 @@
        if (match.awayteamname.length > 15) {
          match.awayteamname = match.awayteamname.slice(0, 14) + "...";
        }
-       match.hometeamname.replace('&','&amp;').replace('<','&gt;').replace('>','&lt;');
-       match.awayteamname.replace('&','&amp;').replace('<','&gt;').replace('>','&lt;');
+       match.hometeamname = match.hometeamname.replace('&','&amp;').replace('<','&gt;').replace('>','&lt;');
+       match.awayteamname = match.awayteamname.replace('&','&amp;').replace('<','&gt;').replace('>','&lt;');
        var classname = i%2 ? "tipo2" : "tipo1";
        teamdata.previousmatches += "<tr class=\"" + classname + "\">\
                <td>" + new Date(match.date).toLocaleDateString() + "</td>\
