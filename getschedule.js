@@ -135,6 +135,91 @@
      }
     });
    }
+   // calculate win/loss ratio
+   var win = 0; loss = 0; draw = 0;
+   var thismonth = {win:0, loss:0, draw:0};
+   var lastmonth = {win:0, loss:0, draw:0};
+   var homescore = {win:0, loss:0, draw:0};
+   var awayscore = {win:0, loss:0, draw:0};
+   for (var i in storage) {
+    if (i == 'lastsync') continue;
+    for (var j = 0; j < storage[i].length; j++) {
+     var now = new Date(), gamedate = new Date(storage[i][j].date);
+     var last = new Date().addMonths(-1);
+     last.setHours(0);
+     last.setMinutes(0);
+     last.setDate(1);
+     now.setHours(0);
+     now.setMinutes(0);
+     now.setDate(1);
+     var game = storage[i][j], myscore, theirscore, home = false;
+     if (game.awayteamname) {
+      myscore = game.homescore;
+      theirscore = game.awayscore;
+      home = true;
+     } else {
+      home = false;
+      myscore = game.awayscore;
+      theirscore = game.homescore;
+     }
+     if (Number(myscore) == Number(theirscore)) {
+      draw++;
+      if (home) {
+       homescore.draw++;
+      } else {
+       awayscore.draw++;
+      }
+      if (gamedate > now) {
+       thismonth.draw++;
+       continue;
+      }
+      if (gamedate > last) {
+       lastmonth.draw++;
+      }
+      continue;
+     }
+     if (Number(myscore) > Number(theirscore)) {
+      win++;
+      if (home) {
+       homescore.win++;
+      } else {
+       awayscore.win++;
+      }
+      if (gamedate > now) {
+       thismonth.win++;
+       continue;
+      }
+      if (gamedate > last) {
+       lastmonth.win++;
+      }
+      continue;
+     }
+     if (home) {
+      homescore.loss++;
+     } else {
+      awayscore.loss++;
+     }
+     if (gamedate > now) {
+      thismonth.loss++;
+      continue;
+     }
+     if (gamedate > last) {
+      lastmonth.loss++;
+     }
+     loss++;
+    }
+   }
+   // display it
+   var container = document.createElement('div'), menu = document.getElementsByClassName('menupers')[0];
+   menu.appendChild(container);
+   container.style.color="#000";
+   container.style.fontSize="12px";
+   container.innerHTML = 'Won ' + Math.round((win/(win+loss+draw))*100) + '% ' + win + '-' + draw + '-' + loss + '<br>'
+   + 'This month: Won ' + Math.round((thismonth.win/(thismonth.win+thismonth.loss+thismonth.draw))*100) + '% ' +
+      thismonth.win + '-' + thismonth.draw + '-' + thismonth.loss + '<br>'
+   + 'Last month: Won ' + Math.round((lastmonth.win/(lastmonth.win+lastmonth.loss+lastmonth.draw))*100) + '% ' + lastmonth.win + '-' + lastmonth.draw + '-' + lastmonth.loss + '<br>'
+   + 'Home: Won ' + Math.round((homescore.win/(homescore.win+homescore.loss+homescore.draw))*100) + '% ' + homescore.win + '-' + homescore.draw + '-' + homescore.loss + '<br>'
+   + 'Away: Won ' + Math.round((awayscore.win/(awayscore.win+awayscore.loss+awayscore.draw))*100) + '% ' + awayscore.win + '-' + awayscore.draw + '-' + awayscore.loss + '<br>'
   });
  });
 })();
