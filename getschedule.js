@@ -85,7 +85,7 @@
          // no simul available
          day = game.parentElement.previousElementSibling.previousElementSibling.innerHTML;
         }
-        var d = new Date(month + " " + day + ", " + year + " 12:00:00");
+        var d = new Date(month + " " + day + ", " + year + " 12:00:00").addDays(1);
         if (d < startSync) {
          continue;
         }
