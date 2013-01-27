@@ -18,6 +18,16 @@
             sendthis = sendResponse;
           }
           break;
+        case 911 :
+         chrome.tabs.getSelected(null, function(tab) {
+          chrome.tabs.insertCSS(tab.id, {'file' : 'foo.css', 'allFrames' : true});
+         });
+         break;
+        case 311 :
+         chrome.tabs.getSelected(null, function(tab) {
+          chrome.tabs.insertCSS(tab.id, {'file' : 'fooundo.css', 'allFrames' : true});
+         });
+         break;
       }
       return true;
     });
