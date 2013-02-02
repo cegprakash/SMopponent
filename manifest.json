@@ -7,25 +7,21 @@
   "content_scripts": [
     {
       "matches" : ["http://*.strikermanager.com/inicio.php*"],
-      "include_globs" : ["http://en*.strikermanager.com*"],
       "js":["jquery-1.8.3.min.js","date.js","getschedule.js","trigger.js"]
     },
     {
       "matches" : ["http://*.strikermanager.com/equipo.php?id=*"],
       "all_frames" : true,
-      "include_globs" : ["http://en*.strikermanager.com*"],
       "js":["jquery.js","jScrollpane.js","team.js"]
     },
     {
       "matches" : ["http://*.strikermanager.com/verrival.php?propio=1&otherteam*"],
       "all_frames" : true,
-      "include_globs" : ["http://en*.strikermanager.com*"],
       "js":["captureclick.js"]
     },
     {
       "matches" : ["http://*.strikermanager.com/proximos_partidos.php*"],
       "all_frames" : true,
-      "include_globs" : ["http://en*.strikermanager.com*"],
       "js":["date.js","winloss.js"]
     }
   ],
@@ -38,10 +34,7 @@
     "img/ftopscr.gif"
   ],
   "permissions": [
-    "http://en3.strikermanager.com/",
-    "http://en2.strikermanager.com/",
-    "http://en1.strikermanager.com/",
-    "http://en.strikermanager.com/",
+    "http://*.strikermanager.com/",
     "storage",
     "tabs"
   ]
