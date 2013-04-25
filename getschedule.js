@@ -215,8 +215,8 @@
    container.style.color="#000";
    container.style.fontSize="12px";
    container.innerHTML = 'Won ' + Math.round((win/(win+loss+draw))*100) + '% ' + win + '-' + draw + '-' + loss + '<br>'
-   + 'This month: Won ' + Math.round((thismonth.win/(thismonth.win+thismonth.loss+thismonth.draw))*100) + '% ' +
-      thismonth.win + '-' + thismonth.draw + '-' + thismonth.loss + '<br>'
+   + 'This month: Won ' + Math.round(((thismonth.win-1)/((thismonth.win-1)+thismonth.loss+thismonth.draw))*100) + '% ' +
+      (thismonth.win-1) + '-' + thismonth.draw + '-' + thismonth.loss + '<br>'
    + 'Last month: Won ' + Math.round((lastmonth.win/(lastmonth.win+lastmonth.loss+lastmonth.draw))*100) + '% ' + lastmonth.win + '-' + lastmonth.draw + '-' + lastmonth.loss + '<br>'
    + 'Home: Won ' + Math.round((homescore.win/(homescore.win+homescore.loss+homescore.draw))*100) + '% ' + homescore.win + '-' + homescore.draw + '-' + homescore.loss + '<br>'
    + 'Away: Won ' + Math.round((awayscore.win/(awayscore.win+awayscore.loss+awayscore.draw))*100) + '% ' + awayscore.win + '-' + awayscore.draw + '-' + awayscore.loss + '<br>'
